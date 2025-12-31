@@ -89,3 +89,10 @@ Travel_recomendation/
 │           ├── HomePage.jsx
 │           └── SearchResultsPage.jsx
 └── README.md
+
+# Les commandes à exécuter :
+## avant Backend : ./venv/Scripts/activate
+## Backend : cd backend
+             python manage.py runserver
+## Frontend : cd frontend
+              npm run dev
