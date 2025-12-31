@@ -31,7 +31,7 @@ Un site de recommandation de voyage (similaire à Booking.com) construit avec **
 |------------|---------|
 | **Django 4.2** | Framework web Python |
 | **Django REST Framework** | Développement de l'API |
-| **Amadeus API** | Données réelles vols/hôtels (optionnel) |
+| **Amadeus API** | Données réelles vols/hôtels |
 
 ### Frontend
 | Technologie | Utilisation |
