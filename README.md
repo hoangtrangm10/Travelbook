@@ -5,7 +5,7 @@ Un site de recommandation de voyage (similaire à Booking.com) construit avec **
 ![Travel Recommendation](https://img.shields.io/badge/Status-Active-success)
 ![Django](https://img.shields.io/badge/Django-4.2-green)
 ![React](https://img.shields.io/badge/React-18-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+
 
 ## ✨ Fonctionnalités
 
