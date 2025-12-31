@@ -1,0 +1,393 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Paquets standards ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{eso-pic}      
+\usepackage{transparent} 
+\usepackage{subcaption} % Pour mettre plusieurs images sur une ligne
+\usepackage{float}     % Pour forcer le placement avec [H]
+
+
+% --- Configuration de la page ---
+\geometry{hmargin=2.5cm,vmargin=2.5cm}
+\onehalfspacing
+
+% --- Style pour le Prompt et le Code ---
+\definecolor{graybg}{rgb}{0.97,0.97,0.97}
+\lstset{
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    backgroundcolor=\color{graybg},
+    frame=lines,
+    showstringspaces=false,
+    keepspaces=true,
+    columns=fullflexible
+}
+
+\begin{document}
+
+% --- PAGE DE GARDE ---
+\begin{titlepage}
+    % 1. Bordure VERTICALE à GAUCHE (Hauteur : Moitié de page)
+    \AddToShipoutPictureBG*{
+        \AtPageUpperLeft{% On part du haut pour que la bordure soit sur la moitié supérieure
+            \put(0,-0.5\paperheight){%
+                \includegraphics[width=1.5cm, height=0.5\paperheight]{Bordure.png}
+            }
+        }
+    }
+
+    % 2. Logo Nanterre placé à l'HORIZONTALE en haut à gauche
+    \AddToShipoutPicture*{
+        \AtPageUpperLeft{%
+            \put(50,-120){% Décalé à droite de la bordure (50pt) et vers le bas (70pt)
+                \includegraphics[width=10cm]{logo_Paris_Nanterre_couleur_RVB.png}
+            }
+        }
+    }
+
+    \centering
+    \vspace*{3cm} % On descend un peu plus le texte pour laisser de la place au logo
+    {\scshape\large Licence MIASHS parcours MIAGE deuxième année \par}
+    \vspace{3cm}
+    {\huge\bfseries Rapport de projet informatique \par}
+    \vspace{0.5cm}
+    {\huge\bfseries TravelBook \par}
+    
+    \vspace{1.5cm}
+    {\large Projet réalisé du 30 Novembre 2025 au 30 Décembre 2025 \par}
+    \small{\url{https://github.com/hoangtrangm10/Travelbook}} \par
+    \vspace{6cm}
+    
+    \begin{flushleft}
+    \hspace{1.5cm} 
+    \large
+    \textbf{Membres du groupe :}\\
+    \vspace{0.2cm}
+    \hspace{1.5cm} Kissiedou Tyra (44011302) \\
+    \hspace{1.5cm} Nguyen Thi Hoang Trang (43001137) \\
+    \end{flushleft}
+
+    \vfill
+    {\large Année universitaire 2025-2026 \par}
+\end{titlepage}
+% --- REMERCIEMENTS (Page 2) ---
+\newpage
+\thispagestyle{plain}
+\section*{Remerciements}
+\addcontentsline{toc}{section}{Remerciements}
+Nous tenons à exprimer notre gratitude à M. François Delbot pour son encadrement précieux durant ce semestre.
+
+\newpage
+% --- TABLE DES MATIÈRES (Page 3) ---
+\renewcommand{\contentsname}{Table des matières}
+\tableofcontents
+\newpage
+
+% --- CORPS DU RAPPORT ---
+\section{Introduction}
+Ce projet présente le développement de \textbf{TravelBook}, une application de planification de voyage intelligente. L'innovation majeure réside dans l'utilisation de l'IA comme collaborateur intégré directement à notre environnement de développement.
+
+\section{Environnement de travail}
+\subsection{Le Matériel}
+Le développement de ce projet s’est appuyé sur un écosystème d’outils matériels et logiciels modernes, favorisant l'efficacité et la compréhension technique. L’intégralité du travail a été réalisée sur des ordinateurs personnels (PC), constituant notre base matérielle.
+
+\subsection{Les Logiciels et Outils de Développement}
+Initialement, notre méthodologie reposait sur l'utilisation d'IA génératives telles que Claude et Gemini. Ces outils nous ont permis de concevoir des prototypes rapides grâce aux « artifacts », offrant une première visualisation concrète de la structure du code. Cependant, pour optimiser notre flux de travail, nous avons rapidement évolué vers des outils de développement assistés par l'IA. Après avoir exploré l'IDE Antigravity, nous avons finalement privilégié VS Code. Ce choix s'explique par sa capacité à générer du code et à structurer l'arborescence des fichiers directement en local, tout en offrant une transparence totale sur le raisonnement logique de l'IA. En parallèle, des modèles comme ChatGPT, Deepseek et les dernières versions de Gemini ont été sollicités de manière ponctuelle pour approfondir nos connaissances et clarifier des points techniques complexes.
+
+\subsection{Les Outils de Collaboration et de Rédaction}
+Sur le plan collaboratif, la communication au sein du groupe a été centralisée sur WhatsApp, tandis que Gmail et GitHub ont assuré la gestion, l'assemblage des fichiers et le partage des lignes de commande. Enfin, la rédaction de ce rapport a été effectuée via le langage de composition LaTeX sur la plateforme collaborative Overleaf, garantissant une mise en page rigoureuse et professionnelle.
+
+\section{Description du projet et objectifs}
+Le projet TravelBook a pour ambition de concevoir une plateforme web innovante dédiée à l'optimisation de l'expérience de recherche et de planification de voyage. L'objectif principal est de réduire la charge mentale des futurs voyageurs en leur proposant des solutions rapides, sereines et personnalisées, maximisant ainsi leur satisfaction et l'utilité perçue du service. Le cœur du système repose sur une intelligence artificielle capable d'analyser une multitude de sources (hôtellerie, transports, données économiques) pour extraire les options les plus pertinentes selon les critères de l'utilisateur (type de logement, budget, environnement). Cette recherche s'effectue en deux temps : une phase d'exploration assistée, où l'IA affine les besoins par un dialogue interactif, suivie d'une sélection rigoureuse des meilleures opportunités, enrichie d'avis et d'avertissements contextuels sur la situation sécuritaire ou économique des pays de destination.
+
+Au-delà de la simple recherche, le projet intègre une dimension de planification avancée. Une fois la destination choisie, l'application assiste l'utilisateur dans l'organisation logistique de son arrivée (gestion des transports locaux, accès aux services financiers et télécommunications) et propose, sur demande, un itinéraire optimisé favorisant l'économie locale.
+\section{Bibliothèques, Outils et technologies}
+L’architecture de l'application TravelBook repose sur un écosystème technologique moderne et robuste, segmenté entre un backend performant et un frontend réactif. Le backend est propulsé par le framework Django 4.2, choisi pour sa robustesse et sa sécurité, complété par Django REST Framework pour le développement d'une API structurée. La persistance des données est assurée par une base de données PostgreSQL hébergée sur le cloud NeonDB. Pour le traitement des données de voyage, le système intègre des services de simulation ("Mocks") ainsi qu'une connexion optionnelle à l'API Amadeus pour obtenir des informations réelles sur les vols et les hôtels. La logique d'intelligence artificielle est quant à elle isolée dans un service de planification dédié (ai\_planner\_service.py).
+
+Côté interface utilisateur, nous avons utilisé React 18 pour sa gestion efficace des composants, intégré via l'outil de build Vite pour optimiser les performances de développement. La stylisation est réalisée avec Tailwind CSS, permettant un design moderne et responsive, tandis que la navigation est gérée par React Router. La communication entre le frontend et le backend s'effectue via le client HTTP Axios, et l'aspect visuel est enrichi par la bibliothèque d'icônes Lucide React. Enfin, l'ensemble du code est centralisé sur GitHub, facilitant le versionnage et la collaboration entre les membres du groupe.
+
+\section{Travail réalisé}
+
+La méthodologie adoptée pour ce projet repose sur une stratégie de \textit{One-Shot Prompting}. Nous avons conçu un prompt de référence extrêmement détaillé afin de fournir à l'IA une vision architecturale complète dès le départ. Ce prompt a servi de colonne vertébrale à notre développement, bien que nous l'ayons ajusté au fil de la conversation pour affiner les composants visuels et techniques.
+
+
+\subsection{Le Prompt de Référence}
+Voici la structure directive complète soumise à l'IA pour l'initialisation du projet :
+
+
+Objectif du Projet : Developper une application web complete de type "Travel Planner Intelligent"...
+
+"Genere-moi le code integral de cette application web : Nous mettons au point un site web 
+pour aider les futurs voyageurs a optimiser leur temps de recherche et pour qu'ils 
+entament plus sereinement leur potentiel voyage. Le site web permet a l'utilisateur de 
+trouver une solution rapide pour voyager efficacement et tout simplement, en lui 
+trouvant les options les plus optimales qui vont permettre d'augmenter sa satisfaction 
+et son utilite. Pour s'y faire, l'IA choisit les 5 meilleures options de voyages en 
+vue des elements que l'utilisateur va taper dans la barre de recherche et de la 
+precision de ces elements. 
+
+Remarque : pour plus de precision, l'IA pourra toujours demander plus d'informations 
+pour affiner la recherche. Criteres : Type de logement, type d'environnement, etc. 
+L'IA repartit en categories (billets, vols, hotels) une selection des 10 meilleures 
+options possibles. L'IA donne son avis et ses avertissements (economique, risques). 
+Phase 2 : Planification avancee (taxis, ATM, SIM, adresses utiles) et itineraire local. 
+
+J'aimerais une option pour stocker, modifier et enregistrer les resultats. 
+Ajoute une option d'authentification pour enregistrer les resultats individuellement. 
+Integre une option pour cocher les resultats et les mettre dans une section propre 
+a chaque utilisateur, nommee selon le voyage souhaite."
+
+
+\subsection{Répartition du travail au sein du groupe}
+
+Le travail a été réparti de manière équilibrée entre les deux membres du groupe, en tenant compte des affinités techniques de chacune :
+
+\begin{itemize}
+    \item \textbf{Tyra :} 
+    \begin{itemize}
+        \item Recherche et sélection des environnements de développement (découverte de l'IDE \textit{Antigravity} et migration vers \textit{VS Code}).
+        \item Développement et polissage du \textbf{Frontend} (amélioration des composants suggérés par l'IA des IDEs).
+        \item Rédaction intégrale du rapport de projet et gestion du fichier \texttt{README} sur GitHub.
+    \end{itemize}
+    \item \textbf{Thi Hoang Trang :} 
+    \begin{itemize}
+        \item Optimisation du \textbf{Frontend} et développement de la logique \textbf{Backend}.
+        \item Gestion technique des APIs (notamment l'intégration d'Amadeus).
+        \item Déploiement local et tests d'exécution pour assurer la fluidité de l'aperçu.
+        \item Administration du dépôt \textbf{GitHub} et intégration de l'arborescence des dossiers.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Bilan des fonctionnalités}
+
+Conformément aux attentes du projet, voici le tableau récapitulatif des fonctionnalités prévues initialement par rapport aux réalisations effectives :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{5cm}|c|p{7cm}|}
+\hline
+\textbf{Fonctionnalité} & \textbf{Statut} & \textbf{Observations / Raisons du retrait} \\ \hline
+Interface utilisateur (Frontend) & Réalisée & Design moderne inspiré du siteweb Traveloka avec React et Tailwind CSS. \\ \hline
+Intégration des APIs & Réalisée & Connexion réussie avec l'API Amadeus pour les données réelles. \\ \hline
+Recherche intelligente & Réalisée & Formulaire multi-étapes fonctionnel. \\ \hline
+Authentification (JWT/Sessions) & Non réalisée & Retirée car l'application actuelle se concentre sur la consultation rapide. Sans service de réservation réel, le login n'était pas indispensable pour le prototype. \\ \hline
+Gestion de la base de données & Non réalisée & Liée à l'absence d'authentification ; aucun stockage de données persistantes n'est requis pour cette phase. \\ \hline
+Entraînement de l'IA (Chatbot) & Non réalisée & Remplacée par des simulations (mocks) car l'entraînement d'un modèle NLP personnalisé s'est avéré trop complexe pour le délai imparti. \\ \hline
+\end{tabular}
+\caption{État d'avancement des fonctionnalités.}
+\end{table}
+
+
+\section{Difficultés rencontrées}
+Le développement de \textbf{TravelBook} a été remplit de défis techniques qui nous ont conduits à adapter nos objectifs initiaux. Tout d'abord, la mise en place d'un système d'authentification robuste et la gestion complexe de la base de données PostgreSQL ont représenté des obstacles majeurs. Face aux difficultés de liaison entre les sessions utilisateurs et la sauvegarde persistante des résultats, nous avons fait le choix stratégique de simplifier cette version du site. L'authentification et le stockage personnalisé des données ont donc été mis de côté, bien que nous envisagions de les intégrer lors de futures itérations du projet.
+
+
+
+
+
+Par ailleurs, nous avons rapidement réalisé que l'entraînement complet d'une intelligence artificielle intégrée au site web, destinée à servir de chatbot de voyage, demandait un niveau d'expertise technique supérieur à nos compétences actuelles. Pour pallier cela et garantir une démonstration fonctionnelle, nous avons utilisé des \textit{mock data} (données simulées). Enfin, l'utilisation exclusive d'APIs gratuites a constitué une limite importante : ces services sont souvent restreints en nombre de requêtes ou en accès aux données réelles, ce qui a parfois freiné le déploiement de certaines fonctionnalités de recherche en temps réel.
+
+\section{Bilan}
+
+\subsection{Conclusion}
+
+Ce projet a permis de mettre en lumière l'évolution fulgurante des outils d'intelligence artificielle au service du développement informatique. Par rapport aux technologies disponibles l'année précédente, nous avons constaté une amélioration majeure : l'IA est désormais capable d'interagir directement avec l'arborescence de nos fichiers. L'utilisation d'environnements de développement intégrés (IDE) tels que \textbf{VS Code} ou \textbf{Antigravity} a transformé notre méthodologie. Contrairement aux interfaces web classiques (comme Claude ou Gemini) qui limitent l'IA à la génération d'« artifacts » isolés, l'intégration native en IDE permet de produire un code contextuel, prêt au déploiement. Cette approche est particulièrement efficace car elle permet au développeur de suivre le raisonnement logique de l'IA en temps réel, garantissant ainsi une meilleure maîtrise du projet et évitant l'effet « boîte noire ».
+
+Un autre enseignement majeur de ce travail réside dans l'importance du \textit{prompt engineering}. La réussite du projet a reposé sur notre capacité à formuler un besoin extrêmement précis et exhaustif en un seul message structuré. Notre prompt de référence, définissant l'architecture complète (moteur de recherche inspiré de Traveloka, gestion sécurisée des sessions via JWT, stockage des clés API dans un fichier \texttt{.env}), a été scrupuleusement respecté par l'IA. Cette capacité d'adaptation de l'outil à des recommandations techniques complexes démontre que le rôle du développeur évolue : il devient un architecte capable de piloter l'IA pour transformer une vision conceptuelle en un produit fonctionnel et sécurisé.
+
+\subsection{Perspectives}
+
+Bien que le prototype actuel remplisse les objectifs fixés, plusieurs axes d'amélioration peuvent être envisagés pour l'avenir :
+
+\begin{itemize}
+    \item \textbf{Transition des données simulées aux données réelles :} Actuellement, le projet utilise des \textit{mock data} pour simuler les réponses de l'IA. Une étape cruciale consisterait à finaliser l'intégration complète des APIs \textbf{Amadeus} et \textbf{OpenAI} pour offrir des résultats en temps réel. Grâce à l'utilisation d'un IDE, cette transition est facilitée car la structure globale est déjà configurée pour le déploiement.
+    \item \textbf{Approfondissement de la personnalisation :} L'ajout d'un système d'apprentissage automatique (\textit{machine learning}) plus poussé permettrait à l'IA d'affiner ses recommandations en fonction de l'historique réel des sélections de l'utilisateur stockées dans ses « Sections ».
+    \item \textbf{Optimisation de l'interactivité :} L'intégration de micro-animations via \textit{Framer Motion} et une gestion plus fluide des erreurs lors de l'authentification renforceraient l'aspect professionnel de l'interface, la rapprochant davantage des standards de l'industrie comme ceux de Traveloka.
+\end{itemize}
+
+\newpage
+% --- ANNEXES ---
+\appendix
+
+\section*{Annexe A : Cahier des charges}
+\addcontentsline{toc}{section}{Annexe A : Cahier des charges}
+
+\subsection*{1. Présentation du projet}
+Le projet \textbf{TravelBook} consiste en la création d'une application web de type « Travel Planner Intelligent ». L'objectif est d'offrir un outil complet permettant aux utilisateurs de rechercher, comparer et planifier leurs séjours en s'appuyant sur les capacités d'analyse d'une Intelligence Artificielle.
+
+\subsection*{2. Objectifs fonctionnels}
+Le système est divisé en trois phases majeures :
+\begin{itemize}
+    \item \textbf{Phase 1 : Recherche et Recommandation} 
+    \begin{itemize}
+        \item Interface de recherche intuitive inspirée de Traveloka (Destination, dates, budget).
+        \item Dialogue interactif avec l'IA pour affiner les critères (logement, environnement).
+        \item Présentation d'un Top 10 d'options avec score de satisfaction et avertissements contextuels.
+    \end{itemize}
+    \item \textbf{Phase 2 : Planification Avancée}
+    \begin{itemize}
+        \item Organisation de l'arrivée (transferts, localisation ATM, cartes SIM).
+        \item Génération d'un itinéraire journalier interactif valorisant le commerce local.
+    \end{itemize}
+    \item \textbf{Phase 3 : Espace Personnel}
+    \begin{itemize}
+        \item Système d'authentification pour la sauvegarde individuelle des résultats.
+        \item Gestion (CRUD) de collections de voyages et de sections personnalisées.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{3. Spécifications techniques}
+\begin{itemize}
+    \item \textbf{Backend :} Framework Django 4.2 avec Django REST Framework pour l'API.
+    \item \textbf{Frontend :} React 18 avec Vite et Tailwind CSS pour une interface responsive.
+    \item \textbf{Base de données :} PostgreSQL (NeonDB) pour la persistance des données relationnelles.
+\end{itemize}
+
+\subsection*{4. Contraintes de sécurité}
+\begin{itemize}
+    \item Sécurisation des sessions via tokens JWT stockés en \textit{HTTP Only cookies}.
+    \item Protection des données sensibles (clés API OpenAI/Amadeus) via des variables d'environnement (.env) et exclusion du versionnage GitHub.
+\end{itemize}
+
+\subsection*{5. Méthodologie de développement}
+Le développement a été réalisé de manière collaborative sur \textbf{GitHub}. Une importance particulière a été accordée à l'utilisation d'IA intégrées aux IDE (\textbf{VS Code}, \textbf{Antigravity}), permettant une génération de code directe et une compréhension transparente du raisonnement logique de l'IA.
+
+\section*{Annexe B : Exemple d'exécution du projet}
+\addcontentsline{toc}{section}{Annexe B : Exemple d'exécution du projet}
+
+Cette annexe présente le parcours utilisateur complet, de la phase de recherche assistée par l'IA jusqu'à la génération de l'itinéraire détaillé.
+
+\subsection*{B.1 Configuration du voyage avec l'assistant IA}
+Les captures suivantes illustrent le formulaire intelligent qui permet à l'IA de comprendre les besoins spécifiques de l'utilisateur.
+
+\begin{figure}[H]
+     \centering
+     % Première ligne : Style et Hébergement
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{7.png}
+         \caption{Choix du style de voyage}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{8.png}
+         \caption{Préférences d'hébergement}
+     \end{subfigure}
+     
+     \vspace{0.5cm} % Espace entre les lignes
+     
+     % Deuxième ligne : Voyageurs et Budget
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{9.png}
+         \caption{Paramètres du groupe}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{10.png}
+         \caption{Définition du budget}
+     \end{subfigure}
+     \caption{Interface de saisie des critères personnalisés.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{11.png}
+    \caption{Écran de récapitulatif avant traitement par l'IA.}
+\end{figure}
+
+\newpage
+\subsection*{B.2 Itinéraire et planning générés}
+Une fois les critères validés, l'application affiche les recommandations et l'organisation du séjour.
+
+\begin{figure}[H]
+     \centering
+     % Planning jour par jour
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{12.png}
+         \caption{Détails du Jour 1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{13.png}
+         \caption{Détails du Jour 2}
+     \end{subfigure}
+
+     \vspace{0.5cm}
+
+     % Cartes de sélection (Vols/Hôtels et Attractions)
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{14.png}
+         \caption{Sélection Vol et Hôtel}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{15.png}
+         \caption{Suggestions d'attractions locales}
+     \end{subfigure}
+     \caption{Visualisation de l'itinéraire et des services recommandés.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{16.png}
+    \caption{Résumé financier global et ventilation des coûts.}
+\end{figure}
+\section*{Annexe C : Manuel utilisateur}
+\addcontentsline{toc}{section}{Annexe C : Manuel utilisateur}
+
+\subsection*{1. Prérequis techniques}
+Pour faire fonctionner l'application en local, les outils suivants doivent être installés sur votre machine :
+\begin{itemize}
+    \item \textbf{Python 3.10+} : Langage principal pour le backend.
+    \item \textbf{Node.js \& npm} : Nécessaires pour compiler et lancer le frontend React.
+    \item \textbf{Pip} : Gestionnaire de paquets Python.
+\end{itemize}
+
+\subsection*{2. Installation et Lancement}
+
+\textbf{Étape 1 : Backend (Django)}
+\begin{enumerate}
+    \item Naviguer dans le dossier \texttt{backend/}.
+    \item Installer les dépendances : \texttt{pip install -r requirements.txt}.
+    \item Lancer le serveur : \texttt{python manage.py runserver}. Le backend sera accessible sur \texttt{http://127.0.0.1:8000}.
+\end{enumerate}
+
+\textbf{Étape 2 : Frontend (React)}
+\begin{enumerate}
+    \item Naviguer dans le dossier \texttt{frontend/}.
+    \item Installer les modules : \texttt{npm install}.
+    \item Lancer l'interface : \texttt{npm run dev}. L'application s'ouvrira généralement sur \texttt{http://localhost:5173}.
+\end{enumerate}
+
+\subsection*{3. Guide d'utilisation de l'interface}
+\begin{itemize}
+    \item \textbf{Recherche de voyage :} Sur la page d'accueil, utilisez la barre de recherche pour entrer votre destination, vos dates et votre budget.
+    \item \textbf{Affinement avec l'IA :} Cliquez sur le bouton "Recherche Avancée" pour préciser vos préférences (luxe, nature, etc.). L'IA générera alors des suggestions optimales basées sur ces critères.
+    \item \textbf{Consultation des résultats :} Les résultats sont classés par catégories (Vols, Hôtels, Activités). Vous pouvez consulter les avis contextuels générés pour chaque option.
+\end{itemize}
+
+\subsection*{4. Limitations de la version actuelle}
+Veuillez noter les points suivants concernant ce prototype :
+\begin{itemize}
+    \item \textbf{Accessibilité locale uniquement :} L'application n'est pas déployée en ligne. Elle ne peut être consultée et utilisée que sur une machine où le code source est installé et exécuté localement.
+    \item \textbf{Mode Invité :} Le système d'authentification étant désactivé, les recherches et sélections ne sont pas mémorisées d'une session à l'autre.
+    \item \textbf{Données simulées (Mocks) :} Certaines informations (hôtels, vols) utilisent des données fictives pour garantir la démonstration malgré les restrictions des APIs gratuites.
+\end{itemize}
+
+\end{document}
